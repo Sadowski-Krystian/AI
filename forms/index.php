@@ -1,5 +1,6 @@
 <?php
-
+require_once('libCss.php');
+require_once('interface.php');
 require_once('form.php');
 require_once('button.php');
 $setBtn = isset($_POST['setBtn']) ? $_POST['setBtn'] : null;
