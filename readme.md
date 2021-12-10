@@ -1,2 +1,3 @@
 # Aplikacje Internetowe
-Folder roboczy do Aplikacji Internetowych
+Folder roboczy do Aplikacji Internetowych 
+Język: PHP

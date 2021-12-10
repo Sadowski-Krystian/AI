@@ -76,5 +76,6 @@ echo $types;
 echo "<h3>Lista Plików</h3>";
 $lst = listDir($dir);
 var_dump($lst);
+
 ?>
 
