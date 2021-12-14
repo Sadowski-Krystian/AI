@@ -1,0 +1,778 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>EDU station</title>
+	<link rel="stylesheet" type="text/css" href="http://edu.gplweb.pl/gui/default/gtkDecorator-2.7.13.css?v=2" />
+	
+	
+	
+	<style>
+html, body { height: 100%; }
+	[data-section] {
+		display: none;
+	}
+.dspSect {
+	display: block;
+}
+	
+.itemDesc {
+	width: 100%;
+}
+.itemDesc .gtkImage {
+	position: relative;
+    background-color: #c3c6c5;
+	margin: 0;
+    text-align: center;
+    overflow: hidden;
+    min-height: 290px;
+    width: 100%;
+}
+.itemDesc .gtkImage figcaption {
+	position: absolute;
+	bottom: 0px;
+	background-color: rgba(64,64,64,0.9);
+	color: #fff;
+	font-size: 2rem;
+	font-style: italic;
+	font-weight: 800;
+	text-align: center;
+	min-height: 4rem;
+	height: auto;
+	width: 100%;
+}
+.itemDesc .gtkImage figcaption > div { display: none; }
+.itemDesc .imgClip {
+	border-right: solid 1px #c3c6c5;
+	display: block;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	height: 220px;
+	overflow: hidden;
+}
+.itemDesc img {
+	display: block;
+	margin: 0px auto;
+}
+.itemDesc h1, .itemDesc h2 {
+	border: solid 1px #c3c6c5;
+	font-family: Georgia;
+	font-style: italic;
+	text-align: center;
+	margin-top: 0.3em;/* 0px;*/
+}
+.itemDesc h1 {
+	background-color: #c3c6c5;
+	font-size: 1.8em;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.itemDesc h2 {
+	font-size: 1.3em;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0.5em 0px;
+	width: auto;
+}
+.itemMenu { list-style-type: none; padding: 0px; }
+.itemMenu li { display: inline-block; }
+.itemsList .gtkLabel > div,
+.itemsList a > div {
+	display: inline-block;
+	font-weight: 800;
+	width: 50px;
+}
+.tasksBox {
+	width: 70%;
+}
+.tasksBox > div {
+	border-left: solid 1px #e3e3e3;
+	display: inline-block;
+	margin: -0.6rem 0 -0.6rem .5rem;
+	padding-left: .5rem;
+	vertical-align: middle;
+	width: 30%;
+}
+.tasksBox > div > p {
+	height: 1.2rem;
+	overflow: hidden;
+}
+li .lp, li time {
+	display: inline-block;
+	font-weight: 800;
+	text-align: center;
+	padding: 0 .5rem;
+}
+li .lp {  padding: 0; width: 24px; }
+li time {  width: 120px; }
+.curLp,
+.current {
+	display: inline-block;
+	margin-right: -26px;
+	vertical-align: middle;
+}
+.curLp {  margin-right: -20px; }
+.curLp::before,
+.current::before {
+	position: relative;
+	z-index: 2;
+	border: solid 2px #000;
+	border-radius: 50%;
+	color: #000;
+	content: "";
+	display: inline-block;
+	font-weight: 800;
+	margin-left: -8px;
+	text-align: center;
+	height: 20px;
+	width: 20px;
+}
+.curLp {  margin-right: -44px; }
+.curLp::before {  margin-left: 0px; }
+.current::before {
+	background-color: #fff;
+	content: "✓";
+}
+.curLp::after,
+.current::after {
+	position: relative;
+	top: 4px;
+	left: -3px;
+	z-index: 1;
+	content: "⧫";
+	display: inline-block;
+	transform: rotate(90deg);
+	font-size: 36px;
+	text-align: center;
+	line-height: 36px;
+	overflow: hidden;
+	height: 20px;
+	width: 20px;
+}
+.curLp::after {  top: -2px; }
+.inactive { color: #606060; }
+.assetLocked {
+	color: #606060;
+	cursor: not-allowed;
+}
+.noPadItem > li { overflow: hidden; }
+.itemFlag {
+	border-left: solid 2px #000;
+	display: inline-block;
+	float: left;
+	line-height: 1.2rem;
+	text-align: center;
+	width: 1.25rem;
+	height: 4rem;
+}
+.liState,
+.itemFlag > div {
+	border: solid 2px #000;
+	display: inline-block;
+	/*float: left;*/
+	font-size: 1rem;
+	line-height: 1.2rem;
+	text-align: center;
+	vertical-align: middle;
+	height: 1.25rem;
+	width: 1.25rem;
+}
+.liState.rnd {
+	border-radius: 50%;
+}
+.liState::before, .liState::after {
+	position: relative;
+	background: #000;
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	height: 14px;
+	width: 2px;
+}
+.liState::before {
+	top: -1.2rem;
+	left: .35rem;
+}
+.liState::after {
+	bottom: -1rem;
+	right: .4rem;
+}
+.NOblueBubble {
+	display: inline-block;
+	background: #4a90d9;
+	border-radius: .75rem;
+	color: #fff;
+	line-height: .8rem;
+	padding: .3rem;
+	margin: 0 .3rem;
+}
+.codeBlock {
+	border: solid 1px #b8b9b5;
+	border-radius: 1rem;
+	margin: 0;
+	padding: 1rem;
+}
+.codeBlock.whGr {	background-color: #fff; }
+.codeBlock.grWh {	background-color: #d8d8d6; }
+.codeBlock > figcaption {
+	border-bottom: solid 2px #808080;/*c3c6c5;*/
+	color: #404040;
+	display: block;
+	margin: -0.5rem 0 .5rem 0;
+	font-style: italic;
+}
+.codeBlock > figcaption a {
+	border: solid 2px #808080; /*c3c6c5;*/
+	background-color: #fff;
+	color: #808080;
+	display: inline-block;
+	font-weight: 800;
+	margin-bottom: -2px;
+	text-align: center;
+	width: 3rem;
+	/*padding: 0 .5rem;*/
+}
+.codeBlock > figcaption ~ p {
+	color: #404040;
+	text-indent: 2.5rem;
+}
+.codeBlock.ltr div, .codeBlock.rtl div {
+	display: inline-block;
+	vertical-align: top;
+}
+.codeBlock.ltr, .codeBlock.rtl,
+.codeBlock.ltr .vertical div,
+.codeBlock.rtl .vertical div {
+	display: block;
+	width: 100%;
+}
+.codeBlock pre, .codeBlock code {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+.codeBlock code {
+	background-color: #FDF6E3;
+	color: #404040;
+	font-family: FreeMono, "Curier New";
+	font-size: 1rem;
+	font-weight: 600;
+	padding: 0.5rem;
+}
+.codeBlock p > code {
+	display: inline-block;
+	padding: .1rem .5rem;
+	text-indent: initial;
+}
+.codeBlock div { background-color: #c3c6c5; }
+/*.codeBlock > div:first-of-type,
+.codeBlock > div:last-of-type {
+	overflow: auto;
+	outline: solid 1px #404040;
+	width: 48%;
+}*/
+.codeBlock .arrow {
+	background-color: inherit;
+	color: #000;
+	cursor: initial;
+	font-size: 2rem;
+	line-height: 1.6rem;
+	text-align: center;
+	width: 2%;
+}
+.codeBlock.rtl .arrow::after, .codeBlock.ltr .arrow::after {
+	text-align: center;
+	display: block;
+	width: 100%;
+}
+.codeBlock.ltr .arrow::after { content: "▸"; }
+.codeBlock.rtl .arrow::after { content: "◂"; }
+.codeBlock.ttb .arrow,
+.codeBlock.utd .arrow {
+	color: #808080;
+	font-size: 1rem;
+	line-height: 0.8rem;
+	text-align: center;
+	width: unset;
+}
+.codeBlock.ttb .arrow::after,
+.codeBlock.utd .arrow::after {	content: "▼"; }
+	
+	</style>
+</head>
+<body class="gDesk stickyFooter">
+  <header>
+  		<div class="putLeft txtLeft" style="height: 1.7rem; width: 154px;"></div>
+	<div class="putMiddle">
+	 <div class="gtkDropdown" data-role="profile" data-profile="013" style="width: 160px;">
+		<a href="http://edu.gplweb.pl/#msgs">2021-12-14 14:12:40</a>
+		<div style="--width: 300px; margin-left: -40%; float: none;">
+		<ul>
+			<li>Hello!</li>
+			<li>Whats ya doin?</li>
+			<li>ByeBye</li>
+		</ul>
+		</div>
+	  </div>
+	</div>
+	<div class="putRight txtRight">
+	  <div data-role="clipboard" data-clipbrd="1234"><p>[&]</p></div>
+	  <div data-role="ipAddr" data-addr="83.8.39.161"><p>83.8.39.161</p></div>
+	  <div class="gtkDropdown" data-role="profile" data-profile="013" style="width: 100px;">
+		<a href="http://edu.gplweb.pl/#profile">Guest</a>
+		
+		<div class="txtLeft" style="--width: 140px;">
+		  <ul>
+			<li><a href="http://edu.gplweb.pl/?svc=log">Zaloguj</a></li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  </header>
+  <main id="gBody"><section class="gtkWindow fullScrn NOinnSpace">
+<header class="gtkHeaderBar"><div class="gtkBox hor putLeft"><div class="gtkBox">
+<label class=" gtkLabel txtRight" style="width: 4rem;">
+Idź do</label>
+<input type="text" name="goTo" placeholder="wi/1tr/3" class="gtkEntry" style="width: 8rem;" /><button class="gtkBtn btnFind" title="Idź"><span></span></button></div>
+</div><div class="gtkBox hor putRight"><a href="http://edu.gplweb.pl/?svc=log" class="gtkBtn btnLogin" title="Zaloguj"><span></span></a></div><div>
+<h2>EDU station</h2><p>Stacja edukacja</p></div>
+</header>
+<SECTION class="gtkInfoBar" style="padding: 0rem;"></SECTION><div class="gtkBox itemsTop gtkScrollY autoSbar" style="height: 95%;">
+<div class="gtkBox ver outSpace" style="text-align: center; width: 20%;">
+<div class="itemDesc">
+		<figure class="gtkImage">
+			<img src="http://edu.gplweb.pl/gui/cBanners/es-banner-wide.jpg" alt="" style="width: 500px; height: auto;">
+			<figcaption class="txtCenter">Stacja edukacja</figcaption>
+		</figure>
+
+		<div class="gtkBox ver txtLeft">
+			
+			<div class="gtkLabel"><label class="dspInb txtRight" style="font-weight: 800; width: 100px;">Autor</label>
+			<span>G.Petri</span></div>
+			<div class="gtkLabel"><label class="dspInb txtRight" style="font-weight: 800; width: 100px;">Kontakt</label>
+			<a href="http://edu.gplweb.pl/mailto:gpetri@gplweb.pl" title="Napisz wiadomość">gpetri@gplweb.pl</a>
+			</div>
+			
+		</div>
+</div>
+</div>
+<div class="gtkBox ver outSpace ver" style="width: 100%;">
+<label class="gtkLabelCateg">Dostępne szkolenia</label><SECTION class="gtkListBox" style="min-width: 720px; width: 50%;">
+			<ul class="itemsList">
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>NET</div>Sieci komputerowe<div class="putRight" style="width: auto;"><div class="blueBubble">5</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>PLSKiAS klasa-1 <a href="http://edu.gplweb.pl/?svc=courses&id=2&class=1td" class="blueBubble wide">1TD</a> <a href="http://edu.gplweb.pl/?svc=courses&id=2&class=1te" class="blueBubble wide">1TE</a></p></li><li><p>PLSKiAS klasa-2 <a href="http://edu.gplweb.pl/?svc=courses&id=2&class=2dt4" class="blueBubble wide">2dT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=2&class=2dt5" class="blueBubble wide">2dT5</a></p></li><li><p>PLSKiAS klasa-3 <a href="http://edu.gplweb.pl/?svc=courses&id=2&class=3td" class="blueBubble wide">3Td</a></p></li></ul></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>SO</div>Systemy operacyjne<div class="putRight" style="width: auto;"><div class="blueBubble">0</div></div></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>WI</div>Witryny Internetowe<div class="putRight" style="width: auto;"><div class="blueBubble">8</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>Witryny Interentowe I (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=wi1&class=1tp" class="blueBubble wide">1TP</a> <a href="http://edu.gplweb.pl/?svc=courses&id=wi1&class=1tr" class="blueBubble wide">1TR</a></p></li><li><p>WI-2 Witryny Interentowe II (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=wi2&class=2tp" class="blueBubble wide">2TP</a> <a href="http://edu.gplweb.pl/?svc=courses&id=wi2&class=2tr" class="blueBubble wide">2TR</a></p></li><li><p>WI-3 Witryny Interentowe III (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=wi3&class=3pt4" class="blueBubble wide">3pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=wi3&class=3pt5" class="blueBubble wide">3pT5</a></p></li><li><p>CMS Systemy CMS (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=cms&class=3pt4" class="blueBubble wide">3pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=cms&class=3pt5" class="blueBubble wide">3pT5</a></p></li></ul></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>PI</div>Programowanie Internetowe (2019/2020)<div class="putRight" style="width: auto;"><div class="blueBubble">4</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>AI / TAI <a href="http://edu.gplweb.pl/?svc=courses&id=9&class=2dt5" class="blueBubble wide">2dT5</a> <a href="http://edu.gplweb.pl/?svc=courses&id=9&class=2pt4" class="blueBubble wide">2pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=9&class=2pt5" class="blueBubble wide">2pT5</a> <a href="http://edu.gplweb.pl/?svc=courses&id=9&class=3td" class="blueBubble wide">3Td</a></p></li></ul></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>WD</div>Website Development (2021/22)<div class="putRight" style="width: auto;"><div class="blueBubble">5</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>AI Aplikacje Interentowe III <a href="http://edu.gplweb.pl/?svc=courses&id=ai3&class=3pt4" class="blueBubble wide">3pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=ai3&class=3pt5" class="blueBubble wide">3pT5</a></p></li><li><p>TAI Tworzenie aplikacji interentowych (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=tai&class=3td" class="blueBubble wide">3td</a> <a href="http://edu.gplweb.pl/?svc=courses&id=tai&class=4td" class="blueBubble wide">4td</a></p></li><li><p>ZAW Zaawansowane aplikacje webowe <a href="http://edu.gplweb.pl/?svc=courses&id=zaw&class=3pt4" class="blueBubble wide">3pT4</a></p></li></ul></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>POJ</div>Programowanie obiektowe (2021/22)<div class="putRight" style="width: auto;"><div class="blueBubble">7</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>PG Programowanie <a href="http://edu.gplweb.pl/?svc=courses&id=prog&class=2tp" class="blueBubble wide">2TP</a> <a href="http://edu.gplweb.pl/?svc=courses&id=prog&class=3pt5" class="blueBubble wide">3pT5</a></p></li><li><p>TiDA Testowanie i dokumentowanie aplikacji <a href="http://edu.gplweb.pl/?svc=courses&id=tida&class=3pt4" class="blueBubble wide">3pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=tida&class=3pt5" class="blueBubble wide">3pT5</a></p></li><li><p>AD Aplikacje Desktopowe (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=ad&class=3pt4" class="blueBubble wide">3pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=ad&class=3pt5" class="blueBubble wide">3pT5</a></p></li><li><p>AM Aplikacje Mobilne (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=am&class=3pt4" class="blueBubble wide">3pT4</a></p></li></ul></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>ZSE</div>Informacje dla uczniów i rodziców<div class="putRight" style="width: auto;"><div class="blueBubble">3</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>Szkolenie z programowania obiektowego <a href="http://edu.gplweb.pl/?svc=courses&id=&class=oop" class="blueBubble wide">oop</a></p></li><li><p>Pakiet infromacyjny od wychowawcy <a href="http://edu.gplweb.pl/?svc=courses&id=&class=1tr" class="blueBubble wide">1tr</a></p></li><li><p>Praktyki <a href="http://edu.gplweb.pl/?svc=courses&id=32&class=3te" class="blueBubble wide">3TE</a></p></li></ul></div></li>
+</ul>
+
+			</SECTION>
+</div>
+</div>
+</section>
+</main>
+  <footer class="gtkStatusBar">
+	
+	<div class="putLeft txtLeft">
+	R-065
+	</div>
+	<div class="putMiddle">
+	Platforma EduService hostuje materiały dydaktyczne dla uczniów ZS Elektrycznych w Gorzowie Wlkp.
+	</div>
+	<div class="putRight txtRight">
+	Copyright &copy; Petri Grzegorz
+	</div>
+  </footer>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>EDU station</title>
+	<link rel="stylesheet" type="text/css" href="http://edu.gplweb.pl/gui/default/gtkDecorator-2.7.13.css?v=2" />
+	
+	
+	
+	<style>
+html, body { height: 100%; }
+	[data-section] {
+		display: none;
+	}
+.dspSect {
+	display: block;
+}
+	
+.itemDesc {
+	width: 100%;
+}
+.itemDesc .gtkImage {
+	position: relative;
+    background-color: #c3c6c5;
+	margin: 0;
+    text-align: center;
+    overflow: hidden;
+    min-height: 290px;
+    width: 100%;
+}
+.itemDesc .gtkImage figcaption {
+	position: absolute;
+	bottom: 0px;
+	background-color: rgba(64,64,64,0.9);
+	color: #fff;
+	font-size: 2rem;
+	font-style: italic;
+	font-weight: 800;
+	text-align: center;
+	min-height: 4rem;
+	height: auto;
+	width: 100%;
+}
+.itemDesc .gtkImage figcaption > div { display: none; }
+.itemDesc .imgClip {
+	border-right: solid 1px #c3c6c5;
+	display: block;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	height: 220px;
+	overflow: hidden;
+}
+.itemDesc img {
+	display: block;
+	margin: 0px auto;
+}
+.itemDesc h1, .itemDesc h2 {
+	border: solid 1px #c3c6c5;
+	font-family: Georgia;
+	font-style: italic;
+	text-align: center;
+	margin-top: 0.3em;/* 0px;*/
+}
+.itemDesc h1 {
+	background-color: #c3c6c5;
+	font-size: 1.8em;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.itemDesc h2 {
+	font-size: 1.3em;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0.5em 0px;
+	width: auto;
+}
+.itemMenu { list-style-type: none; padding: 0px; }
+.itemMenu li { display: inline-block; }
+.itemsList .gtkLabel > div,
+.itemsList a > div {
+	display: inline-block;
+	font-weight: 800;
+	width: 50px;
+}
+.tasksBox {
+	width: 70%;
+}
+.tasksBox > div {
+	border-left: solid 1px #e3e3e3;
+	display: inline-block;
+	margin: -0.6rem 0 -0.6rem .5rem;
+	padding-left: .5rem;
+	vertical-align: middle;
+	width: 30%;
+}
+.tasksBox > div > p {
+	height: 1.2rem;
+	overflow: hidden;
+}
+li .lp, li time {
+	display: inline-block;
+	font-weight: 800;
+	text-align: center;
+	padding: 0 .5rem;
+}
+li .lp {  padding: 0; width: 24px; }
+li time {  width: 120px; }
+.curLp,
+.current {
+	display: inline-block;
+	margin-right: -26px;
+	vertical-align: middle;
+}
+.curLp {  margin-right: -20px; }
+.curLp::before,
+.current::before {
+	position: relative;
+	z-index: 2;
+	border: solid 2px #000;
+	border-radius: 50%;
+	color: #000;
+	content: "";
+	display: inline-block;
+	font-weight: 800;
+	margin-left: -8px;
+	text-align: center;
+	height: 20px;
+	width: 20px;
+}
+.curLp {  margin-right: -44px; }
+.curLp::before {  margin-left: 0px; }
+.current::before {
+	background-color: #fff;
+	content: "✓";
+}
+.curLp::after,
+.current::after {
+	position: relative;
+	top: 4px;
+	left: -3px;
+	z-index: 1;
+	content: "⧫";
+	display: inline-block;
+	transform: rotate(90deg);
+	font-size: 36px;
+	text-align: center;
+	line-height: 36px;
+	overflow: hidden;
+	height: 20px;
+	width: 20px;
+}
+.curLp::after {  top: -2px; }
+.inactive { color: #606060; }
+.assetLocked {
+	color: #606060;
+	cursor: not-allowed;
+}
+.noPadItem > li { overflow: hidden; }
+.itemFlag {
+	border-left: solid 2px #000;
+	display: inline-block;
+	float: left;
+	line-height: 1.2rem;
+	text-align: center;
+	width: 1.25rem;
+	height: 4rem;
+}
+.liState,
+.itemFlag > div {
+	border: solid 2px #000;
+	display: inline-block;
+	/*float: left;*/
+	font-size: 1rem;
+	line-height: 1.2rem;
+	text-align: center;
+	vertical-align: middle;
+	height: 1.25rem;
+	width: 1.25rem;
+}
+.liState.rnd {
+	border-radius: 50%;
+}
+.liState::before, .liState::after {
+	position: relative;
+	background: #000;
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	height: 14px;
+	width: 2px;
+}
+.liState::before {
+	top: -1.2rem;
+	left: .35rem;
+}
+.liState::after {
+	bottom: -1rem;
+	right: .4rem;
+}
+.NOblueBubble {
+	display: inline-block;
+	background: #4a90d9;
+	border-radius: .75rem;
+	color: #fff;
+	line-height: .8rem;
+	padding: .3rem;
+	margin: 0 .3rem;
+}
+.codeBlock {
+	border: solid 1px #b8b9b5;
+	border-radius: 1rem;
+	margin: 0;
+	padding: 1rem;
+}
+.codeBlock.whGr {	background-color: #fff; }
+.codeBlock.grWh {	background-color: #d8d8d6; }
+.codeBlock > figcaption {
+	border-bottom: solid 2px #808080;/*c3c6c5;*/
+	color: #404040;
+	display: block;
+	margin: -0.5rem 0 .5rem 0;
+	font-style: italic;
+}
+.codeBlock > figcaption a {
+	border: solid 2px #808080; /*c3c6c5;*/
+	background-color: #fff;
+	color: #808080;
+	display: inline-block;
+	font-weight: 800;
+	margin-bottom: -2px;
+	text-align: center;
+	width: 3rem;
+	/*padding: 0 .5rem;*/
+}
+.codeBlock > figcaption ~ p {
+	color: #404040;
+	text-indent: 2.5rem;
+}
+.codeBlock.ltr div, .codeBlock.rtl div {
+	display: inline-block;
+	vertical-align: top;
+}
+.codeBlock.ltr, .codeBlock.rtl,
+.codeBlock.ltr .vertical div,
+.codeBlock.rtl .vertical div {
+	display: block;
+	width: 100%;
+}
+.codeBlock pre, .codeBlock code {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+.codeBlock code {
+	background-color: #FDF6E3;
+	color: #404040;
+	font-family: FreeMono, "Curier New";
+	font-size: 1rem;
+	font-weight: 600;
+	padding: 0.5rem;
+}
+.codeBlock p > code {
+	display: inline-block;
+	padding: .1rem .5rem;
+	text-indent: initial;
+}
+.codeBlock div { background-color: #c3c6c5; }
+/*.codeBlock > div:first-of-type,
+.codeBlock > div:last-of-type {
+	overflow: auto;
+	outline: solid 1px #404040;
+	width: 48%;
+}*/
+.codeBlock .arrow {
+	background-color: inherit;
+	color: #000;
+	cursor: initial;
+	font-size: 2rem;
+	line-height: 1.6rem;
+	text-align: center;
+	width: 2%;
+}
+.codeBlock.rtl .arrow::after, .codeBlock.ltr .arrow::after {
+	text-align: center;
+	display: block;
+	width: 100%;
+}
+.codeBlock.ltr .arrow::after { content: "▸"; }
+.codeBlock.rtl .arrow::after { content: "◂"; }
+.codeBlock.ttb .arrow,
+.codeBlock.utd .arrow {
+	color: #808080;
+	font-size: 1rem;
+	line-height: 0.8rem;
+	text-align: center;
+	width: unset;
+}
+.codeBlock.ttb .arrow::after,
+.codeBlock.utd .arrow::after {	content: "▼"; }
+	
+	</style>
+</head>
+<body class="gDesk stickyFooter">
+  <header>
+  		<div class="putLeft txtLeft" style="height: 1.7rem; width: 154px;"></div>
+	<div class="putMiddle">
+	 <div class="gtkDropdown" data-role="profile" data-profile="013" style="width: 160px;">
+		<a href="http://edu.gplweb.pl/#msgs">2021-12-14 14:12:51</a>
+		<div style="--width: 300px; margin-left: -40%; float: none;">
+		<ul>
+			<li>Hello!</li>
+			<li>Whats ya doin?</li>
+			<li>ByeBye</li>
+		</ul>
+		</div>
+	  </div>
+	</div>
+	<div class="putRight txtRight">
+	  <div data-role="clipboard" data-clipbrd="1234"><p>[&]</p></div>
+	  <div data-role="ipAddr" data-addr="83.8.39.161"><p>83.8.39.161</p></div>
+	  <div class="gtkDropdown" data-role="profile" data-profile="013" style="width: 100px;">
+		<a href="http://edu.gplweb.pl/#profile">Guest</a>
+		
+		<div class="txtLeft" style="--width: 140px;">
+		  <ul>
+			<li><a href="http://edu.gplweb.pl/?svc=log">Zaloguj</a></li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  </header>
+  <main id="gBody"><section class="gtkWindow fullScrn NOinnSpace">
+<header class="gtkHeaderBar"><div class="gtkBox hor putLeft"><div class="gtkBox">
+<label class=" gtkLabel txtRight" style="width: 4rem;">
+Idź do</label>
+<input type="text" name="goTo" placeholder="wi/1tr/3" class="gtkEntry" style="width: 8rem;" /><button class="gtkBtn btnFind" title="Idź"><span></span></button></div>
+</div><div class="gtkBox hor putRight"><a href="http://edu.gplweb.pl/?svc=log" class="gtkBtn btnLogin" title="Zaloguj"><span></span></a></div><div>
+<h2>EDU station</h2><p>Stacja edukacja</p></div>
+</header>
+<SECTION class="gtkInfoBar" style="padding: 0rem;"></SECTION><div class="gtkBox itemsTop gtkScrollY autoSbar" style="height: 95%;">
+<div class="gtkBox ver outSpace" style="text-align: center; width: 20%;">
+<div class="itemDesc">
+		<figure class="gtkImage">
+			<img src="http://edu.gplweb.pl/gui/cBanners/es-banner-wide.jpg" alt="" style="width: 500px; height: auto;">
+			<figcaption class="txtCenter">Stacja edukacja</figcaption>
+		</figure>
+
+		<div class="gtkBox ver txtLeft">
+			
+			<div class="gtkLabel"><label class="dspInb txtRight" style="font-weight: 800; width: 100px;">Autor</label>
+			<span>G.Petri</span></div>
+			<div class="gtkLabel"><label class="dspInb txtRight" style="font-weight: 800; width: 100px;">Kontakt</label>
+			<a href="http://edu.gplweb.pl/mailto:gpetri@gplweb.pl" title="Napisz wiadomość">gpetri@gplweb.pl</a>
+			</div>
+			
+		</div>
+</div>
+</div>
+<div class="gtkBox ver outSpace ver" style="width: 100%;">
+<label class="gtkLabelCateg">Dostępne szkolenia</label><SECTION class="gtkListBox" style="min-width: 720px; width: 50%;">
+			<ul class="itemsList">
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>NET</div>Sieci komputerowe<div class="putRight" style="width: auto;"><div class="blueBubble">5</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>PLSKiAS klasa-1 <a href="http://edu.gplweb.pl/?svc=courses&id=2&class=1td" class="blueBubble wide">1TD</a> <a href="http://edu.gplweb.pl/?svc=courses&id=2&class=1te" class="blueBubble wide">1TE</a></p></li><li><p>PLSKiAS klasa-2 <a href="http://edu.gplweb.pl/?svc=courses&id=2&class=2dt4" class="blueBubble wide">2dT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=2&class=2dt5" class="blueBubble wide">2dT5</a></p></li><li><p>PLSKiAS klasa-3 <a href="http://edu.gplweb.pl/?svc=courses&id=2&class=3td" class="blueBubble wide">3Td</a></p></li></ul></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>SO</div>Systemy operacyjne<div class="putRight" style="width: auto;"><div class="blueBubble">0</div></div></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>WI</div>Witryny Internetowe<div class="putRight" style="width: auto;"><div class="blueBubble">8</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>Witryny Interentowe I (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=wi1&class=1tp" class="blueBubble wide">1TP</a> <a href="http://edu.gplweb.pl/?svc=courses&id=wi1&class=1tr" class="blueBubble wide">1TR</a></p></li><li><p>WI-2 Witryny Interentowe II (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=wi2&class=2tp" class="blueBubble wide">2TP</a> <a href="http://edu.gplweb.pl/?svc=courses&id=wi2&class=2tr" class="blueBubble wide">2TR</a></p></li><li><p>WI-3 Witryny Interentowe III (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=wi3&class=3pt4" class="blueBubble wide">3pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=wi3&class=3pt5" class="blueBubble wide">3pT5</a></p></li><li><p>CMS Systemy CMS (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=cms&class=3pt4" class="blueBubble wide">3pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=cms&class=3pt5" class="blueBubble wide">3pT5</a></p></li></ul></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>PI</div>Programowanie Internetowe (2019/2020)<div class="putRight" style="width: auto;"><div class="blueBubble">4</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>AI / TAI <a href="http://edu.gplweb.pl/?svc=courses&id=9&class=2dt5" class="blueBubble wide">2dT5</a> <a href="http://edu.gplweb.pl/?svc=courses&id=9&class=2pt4" class="blueBubble wide">2pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=9&class=2pt5" class="blueBubble wide">2pT5</a> <a href="http://edu.gplweb.pl/?svc=courses&id=9&class=3td" class="blueBubble wide">3Td</a></p></li></ul></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>WD</div>Website Development (2021/22)<div class="putRight" style="width: auto;"><div class="blueBubble">5</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>AI Aplikacje Interentowe III <a href="http://edu.gplweb.pl/?svc=courses&id=ai3&class=3pt4" class="blueBubble wide">3pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=ai3&class=3pt5" class="blueBubble wide">3pT5</a></p></li><li><p>TAI Tworzenie aplikacji interentowych (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=tai&class=3td" class="blueBubble wide">3td</a> <a href="http://edu.gplweb.pl/?svc=courses&id=tai&class=4td" class="blueBubble wide">4td</a></p></li><li><p>ZAW Zaawansowane aplikacje webowe <a href="http://edu.gplweb.pl/?svc=courses&id=zaw&class=3pt4" class="blueBubble wide">3pT4</a></p></li></ul></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>POJ</div>Programowanie obiektowe (2021/22)<div class="putRight" style="width: auto;"><div class="blueBubble">7</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>PG Programowanie <a href="http://edu.gplweb.pl/?svc=courses&id=prog&class=2tp" class="blueBubble wide">2TP</a> <a href="http://edu.gplweb.pl/?svc=courses&id=prog&class=3pt5" class="blueBubble wide">3pT5</a></p></li><li><p>TiDA Testowanie i dokumentowanie aplikacji <a href="http://edu.gplweb.pl/?svc=courses&id=tida&class=3pt4" class="blueBubble wide">3pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=tida&class=3pt5" class="blueBubble wide">3pT5</a></p></li><li><p>AD Aplikacje Desktopowe (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=ad&class=3pt4" class="blueBubble wide">3pT4</a> <a href="http://edu.gplweb.pl/?svc=courses&id=ad&class=3pt5" class="blueBubble wide">3pT5</a></p></li><li><p>AM Aplikacje Mobilne (2021/22) <a href="http://edu.gplweb.pl/?svc=courses&id=am&class=3pt4" class="blueBubble wide">3pT4</a></p></li></ul></div></li>
+<li><div class="gtkLabel" style="height: auto; width: 100%;"><div>ZSE</div>Informacje dla uczniów i rodziców<div class="putRight" style="width: auto;"><div class="blueBubble">3</div></div><ul class="gtkListBox bubblesInside wide" style="list-style-type: none; margin-bottom: 0;"><li><p>Szkolenie z programowania obiektowego <a href="http://edu.gplweb.pl/?svc=courses&id=&class=oop" class="blueBubble wide">oop</a></p></li><li><p>Pakiet infromacyjny od wychowawcy <a href="http://edu.gplweb.pl/?svc=courses&id=&class=1tr" class="blueBubble wide">1tr</a></p></li><li><p>Praktyki <a href="http://edu.gplweb.pl/?svc=courses&id=32&class=3te" class="blueBubble wide">3TE</a></p></li></ul></div></li>
+</ul>
+
+			</SECTION>
+</div>
+</div>
+</section>
+</main>
+  <footer class="gtkStatusBar">
+	
+	<div class="putLeft txtLeft">
+	R-065
+	</div>
+	<div class="putMiddle">
+	Platforma EduService hostuje materiały dydaktyczne dla uczniów ZS Elektrycznych w Gorzowie Wlkp.
+	</div>
+	<div class="putRight txtRight">
+	Copyright &copy; Petri Grzegorz
+	</div>
+  </footer>
+</html>
