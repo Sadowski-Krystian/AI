@@ -1,0 +1,1 @@
+a:5:{s:5:"klasa";s:4:"3PT4";s:7:"zadanie";s:8:"skontrum";s:4:"data";i:1644274800;s:4:"imie";s:8:"Krystian";s:8:"nazwisko";s:8:"Sadowski";}
