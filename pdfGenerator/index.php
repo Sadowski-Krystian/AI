@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 
 require('./lib/tcpdf.php');
@@ -13,6 +13,8 @@ $pdf->setSubject('PDF_Generator');
 $pdf->setKeywords('TCPDF, PDF, example, test, guide');
 $pdf->setFontSubsetting(true);
 $pdf->setFont('dejavusans', '', 14, '', true);
+TCPDF_FONTS::addTTFfont('fonts/Lato-Regular.ttf');
+$pdf->setFont('Lato-Regular', 'B', 16);
 $pdf->AddPage();
 $pdf->Image('src/zse.png', '', 20, 58, 58, '', '', '', false, 300, '', false, false, false, false, false, false);
 $headerhtml = "<b><p style='font-size: 20px;'>Zespół Szkół Elektrycznych</p></b>";
