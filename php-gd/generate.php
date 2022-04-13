@@ -1,34 +1,28 @@
 <?php
 $setBtn = isset($_POST['setBtn']) ? $_POST['setBtn'] : null;
 $usrFile = isset($_FILES['file']) ? $_FILES['file'] : null;
+$text = isset($_POST['tekst']) ? $_POST['tekst'] : null;
+define('COLOR', [0, 0, 0]);
+define('FONT_SIZE', 28);
+define('FONT_FAMILY', 'Lato-Regular.ttf');
+define('MARGIN', 20);
 if($setBtn !== null){
-    
-    $extension = substr($usrFile['name'] , strrpos($usrFile['name'] , '.') +1);
-    if($extension == 'png' || $extension == 'jpeg' || $extension == 'jpg'){
-        
-       
-    }else{
-        
-    }
+    // var_dump($text);
+   generateImg($usrFile['tmp_name'],$text);
 }
 
-generateImg();
 
-function generateImg(){
-     // Create an image with the specified dimensions
-   // Create an image with the specified dimensions
-   $image = imageCreate(600,300);
-   $icon = imagecreatefrompng('logo.png');
-   imagecopy($image, $icon, 100, 0, 0, 0, 250, 250);
-   // Create a color (this first call to imageColorAllocate
-   //  also automatically sets the image background color)
-
- 
-   // Set type of image and send the output
-   header("Content-type: image/png");
-   imagePng($image);
- 
-   // Release memory
-   imageDestroy($image);
+function generateImg($uploadedImage, $caption){
+  $image = imagecreatefrompng($uploadedImage);
+  if ($image) {
+      $imageHeight = getimagesize($uploadedImage)[1];
+      $imageHeight -= MARGIN;
+      $color = imagecolorallocate($image, ...COLOR);
+      $font = implode(DIRECTORY_SEPARATOR, ['./assets/', FONT_FAMILY]);
+      imagettftext($image, FONT_SIZE, 0, MARGIN, $imageHeight, $color, $font, $caption);
+      header('Content-Type: image/jpeg');
+      imagejpeg($image);
+      imagedestroy($image);
+  }
 }
 ?>
