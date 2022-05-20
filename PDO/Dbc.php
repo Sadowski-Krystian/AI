@@ -1,6 +1,6 @@
 <?php
     class Dbc {
-        private $db = null;
+        public $db = null;
         private $msgs = [];
 
         public function __construct($host, $base, $charset, $user, $pass) {
