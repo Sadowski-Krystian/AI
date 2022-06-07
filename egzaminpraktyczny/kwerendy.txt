@@ -1,0 +1,4 @@
+SELECT `id`,`nr_rejsu`,`czas`,`kierunek`,`status_lotu` FROM `odloty` ORDER BY `czas` DESC - kw1
+SELECT MIN(`czas`) FROM `odloty` WHERE `czas` BETWEEN '10:10' AND '10:19' - kw2
+SELECT `nr_rejsu`, samoloty.linie FROM `odloty` JOIN samoloty ON odloty.samoloty_id = samoloty.id WHERE kierunek = 'Malta' - kw3
+UPDATE `przyloty` SET `status_lotu`='planowy' WHERE `nr_rejsu` = 'LH9829' - kw4
